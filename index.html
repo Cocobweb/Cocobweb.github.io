@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — Projets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:        #0a0c0f;
+      --bg2:       #0f1218;
+      --bg3:       #161b24;
+      --border:    rgba(255,255,255,0.07);
+      --text:      #e8eaf0;
+      --muted:     #6b7385;
+      --bds:       #34d399;
+      --bds-dim:   rgba(52,211,153,0.1);
+      --ia:        #60a5fa;
+      --ia-dim:    rgba(96,165,250,0.1);
+      --cyber:     #f97316;
+      --cyber-dim: rgba(249,115,22,0.1);
+      --all:       #a78bfa;
+      --all-dim:   rgba(167,139,250,0.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      position: relative;
+      padding: 80px 48px 64px;
+      max-width: 1200px;
+      margin: 0 auto;
+      z-index: 1;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 99px;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.1s forwards;
+    }
+
+    .header-badge span.dot {
+      width: 6px; height: 6px;
+      background: var(--all);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: #fff;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.2s forwards;
+    }
+
+    h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--ia) 0%, var(--all) 50%, var(--cyber) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header-sub {
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 480px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.35s forwards;
+    }
+
+    /* ─── FILTERS ─── */
+    .filters-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px 40px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.5s forwards;
+      position: relative;
+      z-index: 1;
+    }
+
+    .filter-btn {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 8px 18px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .filter-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .filter-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+
+    .filter-btn[data-cat="all"].active    { color: var(--all);   border-color: var(--all);   background: var(--all-dim);   }
+    .filter-btn[data-cat="bds"].active    { color: var(--bds);   border-color: var(--bds);   background: var(--bds-dim);   }
+    .filter-btn[data-cat="ia"].active     { color: var(--ia);    border-color: var(--ia);    background: var(--ia-dim);    }
+    .filter-btn[data-cat="cyber"].active  { color: var(--cyber); border-color: var(--cyber); background: var(--cyber-dim); }
+
+    /* ─── GRID ─── */
+    .grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px 80px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─── CARD ─── */
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+    }
+
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card.hidden {
+      display: none;
+    }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .card[data-cat="bds"]::after   { box-shadow: inset 0 0 0 1px var(--bds); }
+    .card[data-cat="ia"]::after    { box-shadow: inset 0 0 0 1px var(--ia); }
+    .card[data-cat="cyber"]::after { box-shadow: inset 0 0 0 1px var(--cyber); }
+
+    .card:hover::after { opacity: 1; }
+
+    .card:hover {
+      transform: translateY(-4px) !important;
+      box-shadow: 0 20px 60px -20px rgba(0,0,0,0.6);
+    }
+
+    /* Glow accent top-left */
+    .card .glow {
+      position: absolute;
+      top: -40px; left: -40px;
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.08;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .card:hover .glow { opacity: 0.18; }
+
+    .card[data-cat="bds"]   .glow { background: var(--bds); }
+    .card[data-cat="ia"]    .glow { background: var(--ia); }
+    .card[data-cat="cyber"] .glow { background: var(--cyber); }
+
+    /* Card tag */
+    .card-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 4px;
+      width: fit-content;
+    }
+
+    .card-tag .tag-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+    }
+
+    .card[data-cat="bds"]   .card-tag { color: var(--bds);   background: var(--bds-dim);   }
+    .card[data-cat="ia"]    .card-tag { color: var(--ia);    background: var(--ia-dim);    }
+    .card[data-cat="cyber"] .card-tag { color: var(--cyber); background: var(--cyber-dim); }
+
+    .card[data-cat="bds"]   .card-tag .tag-dot { background: var(--bds); }
+    .card[data-cat="ia"]    .card-tag .tag-dot { background: var(--ia); }
+    .card[data-cat="cyber"] .card-tag .tag-dot { background: var(--cyber); }
+
+    /* Card title */
+    .card-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+    }
+
+    /* Card description */
+    .card-desc {
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    /* Tech pills */
+    .card-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .tech-pill {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 3px 9px;
+      border-radius: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    /* Card links */
+    .card-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      text-decoration: none;
+      padding: 7px 14px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: var(--bg3);
+      transition: all 0.2s ease;
+      letter-spacing: 0.02em;
+    }
+
+    .card-link svg { flex-shrink: 0; }
+
+    .card[data-cat="bds"]   .card-link.primary { color: var(--bds);   border-color: rgba(52,211,153,0.25);   background: var(--bds-dim);   }
+    .card[data-cat="ia"]    .card-link.primary { color: var(--ia);    border-color: rgba(96,165,250,0.25);   background: var(--ia-dim);    }
+    .card[data-cat="cyber"] .card-link.primary { color: var(--cyber); border-color: rgba(249,115,22,0.25);   background: var(--cyber-dim); }
+
+    .card-link:hover {
+      color: var(--text);
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    /* ─── STATS BAR ─── */
+    .stats-bar {
+      max-width: 1200px;
+      margin: 0 auto 60px;
+      padding: 0 48px;
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.45s forwards;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stat {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .stat-number {
+      font-family: 'Syne', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.03em;
+    }
+
+    .stat-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      text-align: center;
+      padding: 32px 24px 48px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ─── ANIMS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 700px) {
+      header, .filters-wrap, .stats-bar, .grid { padding-left: 20px; padding-right: 20px; }
+      header { padding-top: 48px; }
+      .grid { grid-template-columns: 1fr; }
+      h1 { font-size: 36px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-badge"><span class="dot"></span> Portfolio — Projets</div>
+  <h1>Des projets.<br/><em>De l'impact.</em></h1>
+  <p class="header-sub">Une sélection de projets couvrant la cybersécurité, l'intelligence artificielle et l'engagement associatif.</p>
+</header>
+
+<div class="stats-bar">
+  <div class="stat"><span class="stat-number">7</span><span class="stat-label">Projets</span></div>
+  <div class="stat"><span class="stat-number">3</span><span class="stat-label">Domaines</span></div>
+  <div class="stat"><span class="stat-number">800+</span><span class="stat-label">Personnes impactées</span></div>
+</div>
+
+<div class="filters-wrap">
+  <button class="filter-btn active" data-cat="all">Tous</button>
+  <button class="filter-btn" data-cat="bds">Bureau des Sports</button>
+  <button class="filter-btn" data-cat="ia">IA / Machine Learning</button>
+  <button class="filter-btn" data-cat="cyber">Cybersécurité</button>
+</div>
+
+<div class="grid" id="grid">
+
+  <!-- ── BDS ── -->
+  <div class="card" data-cat="bds">
+    <div class="glow"></div>
+    <div class="card-tag"><span class="tag-dot"></span>Bureau des Sports</div>
+    <div class="card-title">Bilan Carbone — Atlanticup</div>
+    <div class="card-desc">
+      Mesure et analyse de l'empreinte carbone d'un événement sportif majeur réunissant plus de 800 participants. Résultats présentés devant 200 personnes, avec recommandations concrètes pour réduire l'impact environnemental des futures éditions.
+    </div>
+    <div class="card-tech">
+      <span class="tech-pill">Bilan Carbone</span>
+      <span class="tech-pill">Présentation</span>
+      <span class="tech-pill">Développement Durable</span>
+      <span class="tech-pill">800 personnes</span>
+    </div>
+    <div class="card-links">
+      <a class="card-link primary" href="assets/bilan-carbone-atlanticup.pdf" target="_blank">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Voir le PDF
+      </a>
+      <a class="card-link" href="assets/photos-atlanticup/" target="_blank">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Photos
+      </a>
+    </div>
+  </div>
+
+  <!-- ── IA 1 : Cobalt ── -->
+  <div class="card" data-cat="ia">
+    <div class="glow"></div>
+    <div class="card-tag"><span class="tag-dot"></span>IA / Machine Learning</div>
+    <div class="card-title">Cobalt — Comptage Cellulaire par Deep Learning</div>
+    <div class="card-desc">
+      Sous la direction de Cobalt, ce projet automatise le comptage de cellules dans des échantillons biologiques à l'aide de techniques de deep learning. Résoudre un problème concret de vision par ordinateur en milieu scientifique.
+    </div>
+    <div class="card-tech">
+      <span class="tech-pill">Deep Learning</span>
+      <span class="tech-pill">Computer Vision</span>
+      <span class="tech-pill">Python</span>
+    </div>
+    <div class="card-links">
+      <a class="card-link primary" href="https://github.com/VOTRE_USERNAME/cobalt" target="_blank">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+
+  <!-- ── IA 2 : LLM cuisine ── -->
+  <div class="card" data-cat="ia">
+    <div class="glow"></div>
+    <div class="card-tag"><span class="tag-dot"></span>IA / Machine Learning</div>
+    <div class="card-title">Assistant Cuisine par LLM</div>
+    <div class="card-desc">
+      Module d'analyse de recettes, de correspondance d'ingrédients et d'évaluation nutritionnelle. Exploite des technologies NLP pour parser et enrichir des recettes à partir de texte libre, et fournir une analyse nutritionnelle complète.
+    </div>
+    <div class="card-tech">
+      <span class="tech-pill">NLP</span>
+      <span class="tech-pill">LLM</span>
+      <span class="tech-pill">Python</span>
+      <span class="tech-pill">Processing</span>
+    </div>
+    <div class="card-links">
+      <a class="card-link primary" href="https://github.com/VOTRE_USERNAME/assistant-cuisine" target="_blank">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+
+  <!-- ── IA 3 : BSS ── -->
+  <div class="card" data-cat="ia">
+    <div class="glow"></div>
+    <div class="card-tag"><span class="tag-dot"></span>IA / Machine Learning</div>
+    <div class="card-title">Séparation Aveugle de Sources Sous-Déterminée</div>
+    <div class="card-desc">
+      Implémentation de deux méthodes de séparation de sources : Sparse Source Recovery par minimisation contrainte, et CAGCMM (Complex Angular Central Gaussian Mixture Model). Extraction de signaux indépendants à partir de mélanges sans connaissance a priori.
+    </div>
+    <div class="card-tech">
+      <span class="tech-pill">Signal Processing</span>
+      <span class="tech-pill">CAGCMM</span>
+      <span class="tech-pill">Python</span>
+      <span class="tech-pill">Optimisation</span>
+    </div>
+    <div class="card-links">
+      <a class="card-link primary" href="https://github.com/VOTRE_USERNAME/bss-underdetermined" target="_blank">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+
+  <!-- ── IA 4 : Votes Sénat ── -->
+  <div class="card" data-cat="ia">
+    <div class="glow"></div>
+    <div class="card-tag"><span class="tag-dot"></span>IA / Machine Learning</div>
+    <div class="card-title">Votes du Sénat — Vulgarisation Politique</div>
+    <div class="card-desc">
+      Compte Instagram de vulgarisation politique, neutre et indépendant. Traitement automatisé des données de vote sénatorial pour les rendre accessibles au grand public. 169 abonnés, 8 publications.
+    </div>
+    <div class="card-tech">
+      <span class="tech-pill">NLP</span>
+      <span class="tech-pill">Data</span>
+      <span class="tech-pill">Open Data</span>
+      <span class="tech-pill">Vulgarisation</span>
+    </div>
+    <div class="card-links">
+      <a class="card-link primary" href="https://instagram.com/votes_senat" target="_blank">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        Instagram
+      </a>
+    </div>
+  </div>
+
+  <!-- ── Cyber 1 : Wazuh SOC ── -->
+  <div class="card" data-cat="cyber">
+    <div class="glow"></div>
+    <div class="card-tag"><span class="tag-dot"></span>Cybersécurité</div>
+    <div class="card-title">Wazuh SOC Lab — Detection & Response</div>
+    <div class="card-desc">
+      Simulation complète d'un environnement SOC réel sous Docker : déploiement d'un SIEM Wazuh, onboarding d'endpoints, simulation d'attaques réalistes, création de règles de détection custom et rapport d'incident professionnel.
+    </div>
+    <div class="card-tech">
+      <span class="tech-pill">Wazuh</span>
+      <span class="tech-pill">Docker</span>
+      <span class="tech-pill">SIEM</span>
+      <span class="tech-pill">Linux</span>
+      <span class="tech-pill">SOC</span>
+    </div>
+    <div class="card-links">
+      <a class="card-link primary" href="https://github.com/VOTRE_USERNAME/wazuh-soc-lab" target="_blank">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        GitHub
+      </a>
+      <a class="card-link" href="https://github.com/VOTRE_USERNAME/wazuh-soc-lab/blob/main/incident-report.md" target="_blank">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Rapport d'incident
+      </a>
+    </div>
+  </div>
+
+  <!-- ── Cyber 2 : DevSecOps ── -->
+  <div class="card" data-cat="cyber">
+    <div class="glow"></div>
+    <div class="card-tag"><span class="tag-dot"></span>Cybersécurité</div>
+    <div class="card-title">DevSecOps IaC — AWS Security Pipeline</div>
+    <div class="card-desc">
+      Infrastructure AWS entièrement provisionnée avec Terraform, sécurisée dès la CI/CD via Checkov, tfsec et Trivy. Zéro exposition SSH (accès EC2 via SSM), scan de vulnérabilités bloquant, déploiement automatisé et rapport de sécurité généré automatiquement.
+    </div>
+    <div class="card-tech">
+      <span class="tech-pill">Terraform</span>
+      <span class="tech-pill">AWS</span>
+      <span class="tech-pill">GitHub Actions</span>
+      <span class="tech-pill">Docker</span>
+      <span class="tech-pill">Checkov</span>
+      <span class="tech-pill">Trivy</span>
+    </div>
+    <div class="card-links">
+      <a class="card-link primary" href="https://github.com/VOTRE_USERNAME/devsecops-iac-aws" target="_blank">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  &copy; 2025 — Portfolio construit avec GitHub Pages
+</footer>
+
+<script>
+  // ── Filter logic ──
+  const buttons = document.querySelectorAll('.filter-btn');
+  const cards   = document.querySelectorAll('.card');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const cat = btn.dataset.cat;
+      cards.forEach(card => {
+        if (cat === 'all' || card.dataset.cat === cat) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+
+  // ── Scroll reveal ──
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  cards.forEach(card => observer.observe(card));
+</script>
+</body>
+</html>
