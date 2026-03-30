@@ -1,227 +1,973 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Portfolio — Projets</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Corentin Boutault — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;0,900;1,300;1,700&family=Plus+Jakarta+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:        #FAFAF7;
+      --bg2:       #FFFFFF;
+      --bg3:       #F3F3EE;
+      --border:    #E5E4DC;
+      --text:      #1C1C1A;
+      --muted:     #6E6D67;
+      --subtle:    #9B9A94;
 
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+      --bds:       #0C9489;
+      --bds-light: #EBF9F7;
+      --bds-mid:   #CCEFEB;
 
-<style>
-:root {
-  --bg:#0e1116;
-  --bg2:#151922;
-  --border:rgba(255,255,255,0.07);
-  --text:#eef1f7;
-  --muted:#8b93a7;
-  --ia:#60a5fa;
-  --cyber:#f97316;
-}
+      --ia:        #4A44D6;
+      --ia-light:  #EEEEFF;
+      --ia-mid:    #D0CFFB;
 
-*{box-sizing:border-box;margin:0;padding:0}
+      --cyber:     #C9410A;
+      --cyber-light:#FEF0EA;
+      --cyber-mid: #FBCBB2;
 
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:'Instrument Sans',sans-serif;
-}
+      --shadow-sm: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 20px rgba(0,0,0,0.08), 0 12px 40px rgba(0,0,0,0.06);
+      --shadow-lg: 0 8px 40px rgba(0,0,0,0.12), 0 20px 60px rgba(0,0,0,0.08);
+    }
 
-header{
-  padding:80px 40px 40px;
-  max-width:1100px;
-  margin:auto;
-}
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
-h1{
-  font-family:'Syne';
-  font-size:56px;
-}
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-.header-sub{
-  margin-top:16px;
-  color:var(--muted);
-  max-width:600px;
-}
+    /* Subtle texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.018'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
 
-.intro{
-  max-width:1100px;
-  margin:0 auto 40px;
-  padding:0 40px;
-  color:var(--muted);
-}
+    /* ─── TOP NAV ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(250,250,247,0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      padding: 0 48px;
+    }
 
-.grid{
-  max-width:1100px;
-  margin:auto;
-  padding:0 40px 60px;
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
-  gap:20px;
-}
+    .nav-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-.card{
-  background:var(--bg2);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:24px;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  transition:.25s;
-}
+    .nav-logo {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 17px;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
 
-.card:hover{
-  transform:translateY(-5px);
-}
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
 
-.card-title{
-  font-family:'Syne';
-  font-size:18px;
-  font-weight:700;
-}
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      letter-spacing: 0.01em;
+    }
+    .nav-links a:hover { color: var(--text); }
 
-.card-desc{
-  font-size:14px;
-  color:var(--muted);
-}
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 80px 48px 64px;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: start;
+    }
 
-.card-impact{
-  font-size:12px;
-  color:#a5b4fc;
-}
+    .hero-left { max-width: 680px; }
 
-.card-images{
-  display:flex;
-  gap:10px;
-}
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--bds);
+      background: var(--bds-light);
+      border: 1px solid var(--bds-mid);
+      padding: 6px 14px;
+      border-radius: 99px;
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.05s forwards;
+    }
 
-.card-images img{
-  width:100%;
-  max-width:48%;
-  border-radius:8px;
-  border:1px solid var(--border);
-  cursor:pointer;
-  transition:.25s;
-}
+    .hero-eyebrow span {
+      width: 6px; height: 6px;
+      background: var(--bds);
+      border-radius: 50%;
+      animation: pulse 2.5s ease-in-out infinite;
+    }
 
-.card-images img:hover{
-  transform:scale(1.05);
-}
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50% { opacity:0.4; transform:scale(0.8); }
+    }
 
-.card-links{
-  margin-top:10px;
-}
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(42px, 5.5vw, 72px);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.15s forwards;
+    }
 
-.card-link{
-  font-size:13px;
-  text-decoration:none;
-  color:var(--ia);
-}
+    h1 em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--muted);
+    }
 
-/* Lightbox */
-#lightbox{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.9);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:999;
-}
+    .hero-desc {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+      max-width: 520px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.28s forwards;
+    }
 
-#lightbox img{
-  max-width:90%;
-  max-height:90%;
-}
-</style>
+    /* Profile card on the right */
+    .hero-profile {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      min-width: 220px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.4s forwards;
+    }
+
+    .profile-avatar {
+      width: 64px; height: 64px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--ia-light), var(--bds-light));
+      border: 2px solid var(--border);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fraunces', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--ia);
+      overflow: hidden;
+    }
+
+    .profile-avatar img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-name {
+      font-family: 'Fraunces', serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .profile-role {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .profile-tags {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .profile-tag {
+      font-size: 11.5px;
+      font-family: 'JetBrains Mono', monospace;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--muted);
+    }
+
+    .profile-tag svg { color: var(--bds); flex-shrink: 0; }
+
+    /* ─── STATS ─── */
+    .stats-row {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 48px 48px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.5s forwards;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stat-pill {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stat-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stat-icon.green { background: var(--bds-light); color: var(--bds); }
+    .stat-icon.indigo { background: var(--ia-light); color: var(--ia); }
+    .stat-icon.orange { background: var(--cyber-light); color: var(--cyber); }
+
+    .stat-info { display: flex; flex-direction: column; }
+
+    .stat-number {
+      font-family: 'Fraunces', serif;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+      font-weight: 500;
+    }
+
+    /* ─── SECTION TITLE ─── */
+    .section-head {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 48px 28px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-title {
+      font-family: 'Fraunces', serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    /* ─── FILTERS ─── */
+    .filters-wrap {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 48px 32px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.55s forwards;
+      position: relative;
+      z-index: 1;
+    }
+
+    .filter-btn {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 20px;
+      border-radius: 99px;
+      border: 1.5px solid var(--border);
+      background: var(--bg2);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .filter-btn:hover { color: var(--text); border-color: #C8C7C0; }
+
+    .filter-btn[data-cat="all"].active   { color: var(--text); border-color: var(--text); background: var(--text); color: var(--bg); }
+    .filter-btn[data-cat="bds"].active   { color: var(--bds);  border-color: var(--bds-mid); background: var(--bds-light); }
+    .filter-btn[data-cat="ia"].active    { color: var(--ia);   border-color: var(--ia-mid);  background: var(--ia-light);  }
+    .filter-btn[data-cat="cyber"].active { color: var(--cyber);border-color: var(--cyber-mid);background: var(--cyber-light);}
+
+    /* ─── GRID ─── */
+    .grid {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 48px 80px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─── CARD ─── */
+    .card {
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card.visible { opacity:1; transform:translateY(0); }
+    .card.hidden { display:none; }
+
+    .card:hover {
+      transform: translateY(-5px) !important;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card[data-cat="bds"]:hover   { border-color: var(--bds-mid); }
+    .card[data-cat="ia"]:hover    { border-color: var(--ia-mid); }
+    .card[data-cat="cyber"]:hover { border-color: var(--cyber-mid); }
+
+    /* Card images area */
+    .card-images {
+      position: relative;
+      height: 180px;
+      background: var(--bg3);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .card-images.two-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+
+    .card-images.one-image .img-slot { height: 100%; }
+    .card-images.two-images .img-slot { height: 100%; }
+
+    .img-slot {
+      position: relative;
+      overflow: hidden;
+      background: var(--bg3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .img-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .card:hover .img-slot img { transform: scale(1.04); }
+
+    /* Placeholder when no image */
+    .img-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--subtle);
+      border: 2px dashed var(--border);
+      margin: 10px;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+
+    .img-placeholder svg { opacity: 0.4; }
+
+    .card[data-cat="bds"]   .card-images { background: var(--bds-light); }
+    .card[data-cat="ia"]    .card-images { background: var(--ia-light); }
+    .card[data-cat="cyber"] .card-images { background: var(--cyber-light); }
+
+    /* Category ribbon */
+    .card-ribbon {
+      position: absolute;
+      top: 12px; left: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 99px;
+      z-index: 2;
+      backdrop-filter: blur(6px);
+    }
+
+    .card-ribbon .rdot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+    }
+
+    .card[data-cat="bds"]   .card-ribbon { background: rgba(235,249,247,0.92); color: var(--bds);  border: 1px solid var(--bds-mid); }
+    .card[data-cat="ia"]    .card-ribbon { background: rgba(238,238,255,0.92); color: var(--ia);   border: 1px solid var(--ia-mid);  }
+    .card[data-cat="cyber"] .card-ribbon { background: rgba(254,240,234,0.92); color: var(--cyber);border: 1px solid var(--cyber-mid);}
+
+    .card[data-cat="bds"]   .card-ribbon .rdot { background: var(--bds); }
+    .card[data-cat="ia"]    .card-ribbon .rdot  { background: var(--ia); }
+    .card[data-cat="cyber"] .card-ribbon .rdot  { background: var(--cyber); }
+
+    /* Card body */
+    .card-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex: 1;
+    }
+
+    .card-title {
+      font-family: 'Fraunces', serif;
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+
+    .card-desc {
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.7;
+      flex: 1;
+    }
+
+    /* Tech pills */
+    .card-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tech-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--subtle);
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 6px;
+      letter-spacing: 0.03em;
+    }
+
+    /* Card links */
+    .card-links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      color: var(--muted);
+      background: var(--bg3);
+      transition: all 0.2s ease;
+    }
+
+    .card-link:hover { color: var(--text); border-color: #C8C7C0; background: var(--bg); }
+
+    .card[data-cat="bds"]   .card-link.primary { color: var(--bds);  border-color: var(--bds-mid);   background: var(--bds-light);   }
+    .card[data-cat="ia"]    .card-link.primary { color: var(--ia);   border-color: var(--ia-mid);    background: var(--ia-light);    }
+    .card[data-cat="cyber"] .card-link.primary { color: var(--cyber);border-color: var(--cyber-mid); background: var(--cyber-light); }
+
+    .card-link.primary:hover { filter: brightness(0.92); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 48px 48px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-name {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .footer-note {
+      font-size: 12px;
+      color: var(--subtle);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .footer-links a {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(20px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 760px) {
+      nav, .hero, .stats-row, .filters-wrap, .section-head, .grid, footer { padding-left: 20px; padding-right: 20px; }
+      .hero { grid-template-columns: 1fr; padding-top: 40px; }
+      .hero-profile { display: none; }
+      .grid { grid-template-columns: 1fr; }
+      h1 { font-size: 38px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+  </style>
 </head>
-
 <body>
 
-<header>
-  <h1>Corentin Boutault</h1>
-  <p class="header-sub">
-    Ingénieur en cybersécurité & IA.<br><br>
-    J’aime concevoir des solutions concrètes, sécurisées et utiles,
-    en mêlant rigueur technique et impact réel.
-  </p>
+<!-- ─── NAV ─── -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Corentin Boutault</a>
+    <ul class="nav-links">
+      <li><a href="#projets">Projets</a></li>
+      <li><a href="mailto:corentin@example.com">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<header class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <span></span>
+      Ingénieur diplômé IMT Atlantique
+    </div>
+    <h1>Corentin<br/>Boutault,<br/><em>Cyber & IA</em></h1>
+    <p class="hero-desc">
+      Passionné par la sécurité des systèmes et l'intelligence artificielle, j'aime construire des solutions qui ont un impact réel, que ce soit pour détecter des intrusions, automatiser des pipelines ou rendre l'information plus accessible.
+    </p>
+  </div>
+
 </header>
 
-<div class="intro">
-  Voici une sélection de projets illustrant mon approche :
-  résoudre des problèmes concrets avec des solutions robustes et mesurables.
+
+<!-- ─── FILTERS ─── -->
+<div id="projets" style="max-width:1160px;margin:0 auto;padding:0 48px 12px;position:relative;z-index:1;">
+  <h2 style="font-family:'Fraunces',serif;font-size:22px;font-weight:700;letter-spacing:-0.02em;color:var(--text);">Mes projets</h2>
+</div>
+<div class="filters-wrap">
+  <button class="filter-btn active" data-cat="all">Tous les projets</button>
+  <button class="filter-btn" data-cat="bds">Bureau des Sports</button>
+  <button class="filter-btn" data-cat="ia">IA / Machine Learning</button>
+  <button class="filter-btn" data-cat="cyber">Cybersécurité</button>
 </div>
 
-<div class="grid">
+<!-- ─── CARDS ─── -->
+<div class="grid" id="grid">
 
-  <!-- PROJET -->
-  <div class="card">
-    <div class="card-title">Cobalt — Comptage Cellulaire</div>
-
-    <div class="card-desc">
-      Deep learning appliqué à la vision par ordinateur pour automatiser
-      le comptage de cellules biologiques.
+  <!-- ── BDS : Bilan Carbone ── -->
+  <div class="card" data-cat="bds">
+    <div class="card-images one-image">
+      <div class="card-ribbon"><span class="rdot"></span>Bureau des Sports</div>
+      <div class="img-slot">
+        <!-- Remplace src par ton image : <img src="assets/img/bilan-carbone-1.jpg" alt="Bilan Carbone Atlanticup" /> -->
+        <div class="img-placeholder">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Ajouter une image
+        </div>
+      </div>
     </div>
-
-    <div class="card-impact">
-      🎯 Impact : automatisation complète + gain de temps significatif
-    </div>
-
-    <div class="card-images">
-      <img src="assets/img/cobalt1.png">
-      <img src="assets/img/cobalt2.png">
-    </div>
-
-    <div class="card-links">
-      <a class="card-link" href="#">Voir GitHub</a>
+    <div class="card-body">
+      <div class="card-title">Bilan Carbone — Atlanticup</div>
+      <div class="card-desc">
+        Mesure et analyse de l'empreinte carbone d'un événement sportif majeur réunissant plus de 800 participants, en partenariat avec Oresys. Résultats présentés devant 200 personnes avec des recommandations concrètes pour les futures éditions.
+      </div>
+      <div class="card-tech">
+        <span class="tech-pill">Bilan Carbone</span>
+        <span class="tech-pill">Présentation</span>
+        <span class="tech-pill">Développement Durable</span>
+        <span class="tech-pill">800 participants</span>
+      </div>
+      <div class="card-links">
+        <a class="card-link primary" href="assets/pdf/bilan-carbone-atlanticup.pdf" target="_blank">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Voir la présentation
+        </a>
+      </div>
     </div>
   </div>
 
-  <!-- PROJET -->
-  <div class="card">
-    <div class="card-title">Wazuh SOC Lab</div>
-
-    <div class="card-desc">
-      Simulation d’un SOC complet avec détection d’attaques et réponse automatisée.
+  <!-- ── IA : Cobalt ── -->
+  <div class="card" data-cat="ia">
+    <div class="card-images two-images">
+      <div class="card-ribbon"><span class="rdot"></span>IA / ML</div>
+      <div class="img-slot">
+        <!-- <img src="assets/img/cobalt-1.jpg" alt="Cobalt interface" /> -->
+        <div class="img-placeholder">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Image 1
+        </div>
+      </div>
+      <div class="img-slot">
+        <!-- <img src="assets/img/cobalt-2.jpg" alt="Résultats Cobalt" /> -->
+        <div class="img-placeholder">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Image 2
+        </div>
+      </div>
     </div>
-
-    <div class="card-impact">
-      🎯 Impact : reproduction réaliste d’un environnement SOC
+    <div class="card-body">
+      <div class="card-title">Cobalt — Comptage Cellulaire par Deep Learning</div>
+      <div class="card-desc">
+        Automatisation du comptage de cellules dans des échantillons biologiques à l'aide de techniques de deep learning, en collaboration avec l'entreprise Cobalt. Un vrai problème de vision par ordinateur appliqué au milieu scientifique.
+      </div>
+      <div class="card-tech">
+        <span class="tech-pill">Deep Learning</span>
+        <span class="tech-pill">Computer Vision</span>
+        <span class="tech-pill">Python</span>
+      </div>
+      <div class="card-links">
+        <a class="card-link primary" href="https://github.com/Faberra57/cobalt" target="_blank">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          GitHub
+        </a>
+      </div>
     </div>
+  </div>
 
-    <div class="card-images">
-      <img src="assets/img/soc1.png">
-      <img src="assets/img/soc2.png">
+  <!-- ── IA : LLM Cuisine ── -->
+  <div class="card" data-cat="ia">
+    <div class="card-images two-images">
+      <div class="card-ribbon"><span class="rdot"></span>IA / ML</div>
+      <div class="img-slot">
+        <!-- <img src="assets/img/cuisine-1.jpg" alt="Assistant cuisine" /> -->
+        <div class="img-placeholder">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Image 1
+        </div>
+      </div>
+      <div class="img-slot">
+        <!-- <img src="assets/img/cuisine-2.jpg" alt="Analyse nutritionnelle" /> -->
+        <div class="img-placeholder">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Image 2
+        </div>
+      </div>
     </div>
+    <div class="card-body">
+      <div class="card-title">Assistant Cuisine par LLM</div>
+      <div class="card-desc">
+        Module de parsing de recettes, de correspondance d'ingrédients et d'analyse nutritionnelle. Exploite des technologies NLP pour enrichir des recettes à partir de texte libre et fournir un bilan nutritionnel complet.
+      </div>
+      <div class="card-tech">
+        <span class="tech-pill">NLP</span>
+        <span class="tech-pill">LLM</span>
+        <span class="tech-pill">Python</span>
+        <span class="tech-pill">Processing</span>
+      </div>
+      <div class="card-links">
+        <a class="card-link primary" href="https://github.com/Cocobweb/assistant-cuisine-par-processing-de-LLM" target="_blank">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </div>
 
-    <div class="card-links">
-      <a class="card-link" href="#">Voir GitHub</a>
+  <!-- ── IA : BSS ── -->
+  <div class="card" data-cat="ia">
+    <div class="card-images one-image">
+      <div class="card-ribbon"><span class="rdot"></span>IA / ML</div>
+      <div class="img-slot">
+        <!-- <img src="assets/img/bss-1.jpg" alt="Séparation de sources" /> -->
+        <div class="img-placeholder">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Ajouter une image
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-title">Séparation Aveugle de Sources Sous-Déterminée</div>
+      <div class="card-desc">
+        Implémentation de deux méthodes de séparation de sources : Sparse Source Recovery par minimisation contrainte et CAGCMM. Extraction de signaux indépendants à partir de mélanges sans connaissance a priori.
+      </div>
+      <div class="card-tech">
+        <span class="tech-pill">Signal Processing</span>
+        <span class="tech-pill">CAGCMM</span>
+        <span class="tech-pill">Python</span>
+        <span class="tech-pill">Optimisation</span>
+      </div>
+      <div class="card-links">
+        <a class="card-link primary" href="https://github.com/DAMMAK26/Blind-source-detection" target="_blank">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── IA : Votes Sénat ── -->
+  <div class="card" data-cat="ia">
+    <div class="card-images one-image">
+      <div class="card-ribbon"><span class="rdot"></span>IA / ML</div>
+      <div class="img-slot">
+        <!-- <img src="assets/img/senat-1.jpg" alt="Votes du Sénat" /> -->
+        <div class="img-placeholder">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Ajouter une image
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-title">Votes du Sénat — Vulgarisation Politique</div>
+      <div class="card-desc">
+        Compte Instagram de vulgarisation politique, neutre et indépendant. Traitement semi-automatisé des données de vote sénatorial pour les rendre accessibles au grand public. 169 abonnés, 8 publications.
+      </div>
+      <div class="card-tech">
+        <span class="tech-pill">NLP</span>
+        <span class="tech-pill">Data</span>
+        <span class="tech-pill">Open Data</span>
+        <span class="tech-pill">Vulgarisation</span>
+      </div>
+      <div class="card-links">
+        <a class="card-link primary" href="https://www.instagram.com/votes_senat/" target="_blank">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          Instagram
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Cyber : Wazuh SOC ── -->
+  <div class="card" data-cat="cyber">
+    <div class="card-images two-images">
+      <div class="card-ribbon"><span class="rdot"></span>Cybersécurité</div>
+      <div class="img-slot">
+        <!-- <img src="assets/img/wazuh-1.jpg" alt="Dashboard Wazuh" /> -->
+        <div class="img-placeholder">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Image 1
+        </div>
+      </div>
+      <div class="img-slot">
+        <!-- <img src="assets/img/wazuh-2.jpg" alt="Rapport d'incident" /> -->
+        <div class="img-placeholder">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Image 2
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-title">Wazuh SOC Lab — Detection & Response</div>
+      <div class="card-desc">
+        Simulation complète d'un environnement SOC sous Docker : déploiement d'un SIEM Wazuh, onboarding d'endpoints, simulation d'attaques réalistes, règles de détection custom et rapport d'incident professionnel.
+      </div>
+      <div class="card-tech">
+        <span class="tech-pill">Wazuh</span>
+        <span class="tech-pill">Docker</span>
+        <span class="tech-pill">SIEM</span>
+        <span class="tech-pill">Linux</span>
+        <span class="tech-pill">SOC</span>
+      </div>
+      <div class="card-links">
+        <a class="card-link primary" href="https://github.com/Cocobweb/wazuh-soc-lab" target="_blank">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          GitHub
+        </a>
+        <a class="card-link" href="https://github.com/Cocobweb/wazuh-soc-lab/blob/main/docs/incidents/incident-ssh-bruteforce-2026-02-16.md" target="_blank">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Rapport d'incident
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Cyber : DevSecOps ── -->
+  <div class="card" data-cat="cyber">
+    <div class="card-images two-images">
+      <div class="card-ribbon"><span class="rdot"></span>Cybersécurité</div>
+      <div class="img-slot">
+        <!-- <img src="assets/img/devsecops-1.jpg" alt="Pipeline CI/CD" /> -->
+        <div class="img-placeholder">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Image 1
+        </div>
+      </div>
+      <div class="img-slot">
+        <!-- <img src="assets/img/devsecops-2.jpg" alt="Architecture AWS" /> -->
+        <div class="img-placeholder">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Image 2
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-title">DevSecOps IaC — AWS Security Pipeline</div>
+      <div class="card-desc">
+        Infrastructure AWS provisionnée avec Terraform, sécurisée dès la CI/CD via Checkov, tfsec et Trivy. Zéro exposition SSH, scan bloquant, déploiement automatisé et rapport de sécurité généré automatiquement.
+      </div>
+      <div class="card-tech">
+        <span class="tech-pill">Terraform</span>
+        <span class="tech-pill">AWS</span>
+        <span class="tech-pill">GitHub Actions</span>
+        <span class="tech-pill">Docker</span>
+        <span class="tech-pill">Checkov</span>
+        <span class="tech-pill">Trivy</span>
+      </div>
+      <div class="card-links">
+        <a class="card-link primary" href="https://github.com/Cocobweb/devsecops-iac-project" target="_blank">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          GitHub
+        </a>
+      </div>
     </div>
   </div>
 
 </div>
 
-<!-- LIGHTBOX -->
-<div id="lightbox">
-  <img id="lightbox-img">
-</div>
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-name">Corentin Boutault</div>
+      <div class="footer-note">Ingénieur IMT Atlantique · Cybersécurité & IA</div>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/Cocobweb" target="_blank">GitHub</a>
+      <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+      <a href="mailto:corentin@example.com">Contact</a>
+    </div>
+  </div>
+</footer>
 
 <script>
-const imgs = document.querySelectorAll('.card-images img');
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightbox-img');
+  // ── Filters ──
+  const buttons = document.querySelectorAll('.filter-btn');
+  const cards   = document.querySelectorAll('.card');
 
-imgs.forEach(img=>{
-  img.onclick=()=>{
-    lightbox.style.display="flex";
-    lightboxImg.src=img.src;
-  }
-})
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.cat;
+      cards.forEach(card => {
+        if (cat === 'all' || card.dataset.cat === cat) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
 
-lightbox.onclick=()=>{
-  lightbox.style.display="none";
-}
+  // ── Scroll reveal ──
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 90);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.06 });
+
+  cards.forEach(card => observer.observe(card));
 </script>
-
 </body>
 </html>
