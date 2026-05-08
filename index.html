@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -574,11 +574,10 @@
   <div class="projects-note-inner">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
     <p class="projects-note-text">
-      <span data-i18n="note_text">Ces projets mêlent réalisations personnelles et travaux académiques ou collaboratifs — retrouvez bien plus sur mon</span>
+      <span data-i18n="note_text">These projects include personal, academic and collaborative work. Find much more on my</span>
       <a href="https://www.linkedin.com/in/corentin-boutault-461a01285/" target="_blank">LinkedIn</a>
-      <span class="note-sep">·</span>
-      <span data-i18n="note_and">et mon profil</span>
-      <a href="https://www.root-me.org/Cobweb-559491?lang=fr" target="_blank" id="rootme-link">Root-Me</a>.
+      <span data-i18n="note_and">and my profile</span>
+      <a href="https://www.root-me.org/Cobweb-559491?lang=en" target="_blank" id="rootme-link">Root-Me</a>.
     </p>
   </div>
 </div>
@@ -864,7 +863,7 @@
     </div>
     <div class="footer-links">
       <a href="https://github.com/Cocobweb" target="_blank">GitHub</a>
-      <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+      <a href="https://www.linkedin.com/in/corentin-boutault-461a01285/" target="_blank">LinkedIn</a>
       <a href="mailto:corentin.boutault@gmail.com">Contact</a>
     </div>
   </div>
@@ -933,14 +932,14 @@
       senat_title:         'Votes du Sénat — Vulgarisation Politique',
       senat_desc:          "Compte Instagram de vulgarisation politique, neutre et indépendant. Traitement semi-automatisé des données de vote sénatorial pour les rendre accessibles au grand public. 169 abonnés, 8 publications.",
       footer_note:         'Ingénieur IMT Atlantique · Cybersécurité & IA',
-      note_text:           'Ces projets mêlent réalisations personnelles et travaux académiques ou collaboratifs — retrouvez bien plus sur mon',
+      note_text:           'Ces projets mêlent réalisations personnelles et travaux académiques ou collaboratifs. Retrouvez bien plus sur mon',
       note_and:            'et mon profil',
     },
     en: {
       nav_projects:        'Projects',
       hero_eyebrow:        'IMT Atlantique Engineering Graduate',
       hero_subtitle:       'Cyber & AI',
-      hero_desc:           'Passionate about system security and artificial intelligence, I enjoy building solutions that have real impact — whether detecting intrusions, automating pipelines, or making information more accessible.',
+      hero_desc:           'Passionate about system security and artificial intelligence, I enjoy building solutions that have real impact: detecting intrusions, automating pipelines, or making information more accessible.',
       section_title:       'My projects',
       filter_all:          'All projects',
       filter_bds:          'Sports Office',
@@ -965,12 +964,12 @@
       senat_title:         'Senate Votes — Political Outreach',
       senat_desc:          'Neutral and independent political outreach Instagram account. Semi-automated processing of senate vote data to make it accessible to the general public. 169 followers, 8 posts.',
       footer_note:         'IMT Atlantique Engineer · Cybersecurity & AI',
-      note_text:           'These projects include personal, academic and collaborative work — find much more on my',
+      note_text:           'These projects include personal, academic and collaborative work. Find much more on my',
       note_and:            'and my profile',
     }
   };
 
-  let currentLang = 'fr';
+  let currentLang = 'en';
 
   function applyLang(lang) {
     const t = translations[lang];
@@ -985,6 +984,8 @@
       ? 'https://www.root-me.org/Cobweb-559491?lang=fr'
       : 'https://www.root-me.org/Cobweb-559491?lang=en';
   }
+
+  applyLang('en');
 
   document.getElementById('lang-btn').addEventListener('click', () => {
     currentLang = currentLang === 'fr' ? 'en' : 'fr';
