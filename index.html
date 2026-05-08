@@ -87,6 +87,12 @@
       letter-spacing: -0.02em;
     }
 
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
     .nav-links {
       display: flex;
       gap: 28px;
@@ -102,6 +108,23 @@
       letter-spacing: 0.01em;
     }
     .nav-links a:hover { color: var(--text); }
+
+    /* ─── LANG BUTTON ─── */
+    .lang-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 99px;
+      border: 1.5px solid var(--border);
+      background: var(--bg2);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .lang-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.18); }
 
     /* ─── HERO ─── */
     .hero {
@@ -134,11 +157,12 @@
       animation: fadeUp 0.6s ease 0.05s forwards;
     }
 
-    .hero-eyebrow span {
+    .hero-eyebrow .dot {
       width: 6px; height: 6px;
       background: var(--bds);
       border-radius: 50%;
       animation: pulse 2.5s ease-in-out infinite;
+      flex-shrink: 0;
     }
 
     @keyframes pulse {
@@ -480,10 +504,13 @@
 <nav>
   <div class="nav-inner">
     <a href="#" class="nav-logo">Corentin Boutault</a>
-    <ul class="nav-links">
-      <li><a href="#projets">Projets</a></li>
-      <li><a href="mailto:corentin.boutault@gmail.com">Contact</a></li>
-    </ul>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#projets" data-i18n="nav_projects">Projets</a></li>
+        <li><a href="mailto:corentin.boutault@gmail.com">Contact</a></li>
+      </ul>
+      <button class="lang-btn" id="lang-btn">EN</button>
+    </div>
   </div>
 </nav>
 
@@ -491,11 +518,11 @@
 <header class="hero">
   <div class="hero-left">
     <div class="hero-eyebrow">
-      <span></span>
-      Ingénieur diplômé IMT Atlantique
+      <span class="dot"></span>
+      <span data-i18n="hero_eyebrow">Ingénieur diplômé IMT Atlantique</span>
     </div>
-    <h1>Corentin Boutault,<br/><em>Cyber & IA</em></h1>
-    <p class="hero-desc">
+    <h1>Corentin Boutault,<br/><em data-i18n="hero_subtitle">Cyber & IA</em></h1>
+    <p class="hero-desc" data-i18n="hero_desc">
       Passionné par la sécurité des systèmes et l'intelligence artificielle, j'aime construire des solutions qui ont un impact réel, que ce soit pour détecter des intrusions, automatiser des pipelines ou rendre l'information plus accessible.
     </p>
   </div>
@@ -503,13 +530,13 @@
 
 <!-- ─── FILTERS ─── -->
 <div id="projets" style="max-width:1160px;margin:0 auto;padding:0 48px 12px;position:relative;z-index:1;">
-  <h2 style="font-family:'Fraunces',serif;font-size:22px;font-weight:700;letter-spacing:-0.02em;color:var(--text);">Mes projets</h2>
+  <h2 style="font-family:'Fraunces',serif;font-size:22px;font-weight:700;letter-spacing:-0.02em;color:var(--text);" data-i18n="section_title">Mes projets</h2>
 </div>
 <div class="filters-wrap">
-  <button class="filter-btn active" data-cat="all">Tous les projets</button>
-  <button class="filter-btn" data-cat="bds">Bureau des Sports</button>
-  <button class="filter-btn" data-cat="ia">IA / Machine Learning</button>
-  <button class="filter-btn" data-cat="cyber">Cybersécurité</button>
+  <button class="filter-btn active" data-cat="all" data-i18n="filter_all">Tous les projets</button>
+  <button class="filter-btn" data-cat="bds" data-i18n="filter_bds">Bureau des Sports</button>
+  <button class="filter-btn" data-cat="ia" data-i18n="filter_ia">IA / Machine Learning</button>
+  <button class="filter-btn" data-cat="cyber" data-i18n="filter_cyber">Cybersécurité</button>
 </div>
 
 <!-- ─── CARDS ─── -->
@@ -518,15 +545,13 @@
   <!-- ── Cyber : Wazuh SOC ── -->
   <div class="card" data-cat="cyber">
     <div class="card-images two-images">
-      <div class="card-ribbon"><span class="rdot"></span>Cybersécurité</div>
+      <div class="card-ribbon"><span class="rdot"></span><span data-i18n="ribbon_cyber">Cybersécurité</span></div>
       <div class="img-slot">
-        <!-- <img src="assets/img/wazuh-1.jpg" alt="Dashboard Wazuh" /> -->
         <div class="img-placeholder">
 		<img src="assets/img/architecture_wazuh.png" alt="Dashboard Wazuh" />
         </div>
       </div>
       <div class="img-slot">
-        <!-- <img src="assets/img/wazuh-2.jpg" alt="Rapport d'incident" /> -->
         <div class="img-placeholder">
 		<img src="assets/img/rapport-incident.png" alt="Rapport d'incident" />
         </div>
@@ -534,7 +559,7 @@
     </div>
     <div class="card-body">
       <div class="card-title">Wazuh SOC Lab — Detection & Response</div>
-      <div class="card-desc">
+      <div class="card-desc" data-i18n="wazuh_desc">
         Simulation complète d'un environnement SOC sous Docker : déploiement d'un SIEM Wazuh, onboarding d'endpoints, simulation d'attaques réalistes, règles de détection custom et rapport d'incident professionnel.
       </div>
       <div class="card-tech">
@@ -551,7 +576,7 @@
         </a>
         <a class="card-link" href="https://github.com/Cocobweb/wazuh-soc-lab/blob/main/docs/incidents/incident-ssh-bruteforce-2026-02-16.md" target="_blank">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Rapport d'incident
+          <span data-i18n="wazuh_incident_link">Rapport d'incident</span>
         </a>
       </div>
     </div>
@@ -560,15 +585,13 @@
   <!-- ── Cyber : DevSecOps ── -->
   <div class="card" data-cat="cyber">
     <div class="card-images two-images">
-      <div class="card-ribbon"><span class="rdot"></span>Cybersécurité</div>
+      <div class="card-ribbon"><span class="rdot"></span><span data-i18n="ribbon_cyber">Cybersécurité</span></div>
       <div class="img-slot">
-        <!-- <img src="assets/img/architecture.png" alt="Pipeline CI/CD" /> -->
         <div class="img-placeholder">
 		<img src="assets/img/architecture.png" alt="Pipeline CI/CD" />
         </div>
       </div>
       <div class="img-slot">
-        <!-- <img src="assets/img/security_report.png" alt="Architecture AWS" /> -->
         <div class="img-placeholder">
 		<img src="assets/img/security_report.png" alt="Architecture AWS" />
         </div>
@@ -576,7 +599,7 @@
     </div>
     <div class="card-body">
       <div class="card-title">DevSecOps IaC — AWS Security Pipeline</div>
-      <div class="card-desc">
+      <div class="card-desc" data-i18n="devsecops_desc">
         Infrastructure AWS provisionnée avec Terraform, sécurisée dès la CI/CD via Checkov, tfsec et Trivy. Zéro exposition SSH, scan bloquant, déploiement automatisé et rapport de sécurité généré automatiquement.
       </div>
       <div class="card-tech">
@@ -599,14 +622,14 @@
   <!-- ── Cyber : k8s Self-hosted Platform ── -->
   <div class="card" data-cat="cyber">
     <div class="card-images one-image">
-      <div class="card-ribbon"><span class="rdot"></span>Cybersécurité</div>
+      <div class="card-ribbon"><span class="rdot"></span><span data-i18n="ribbon_cyber">Cybersécurité</span></div>
       <div class="img-slot">
         <img src="assets/img/k8s-image.png" alt="k8s Self-hosted Platform" />
       </div>
     </div>
     <div class="card-body">
       <div class="card-title">k8s Self-hosted Platform — GitOps & Secrets</div>
-      <div class="card-desc">
+      <div class="card-desc" data-i18n="k8s_desc">
         Plateforme Kubernetes auto-hébergée sur cluster k3s single-node, provisionnée avec Ansible et pilotée par Flux CD en mode GitOps. Services production (Gitea, Vault, Prometheus/Grafana), isolation par namespace, NetworkPolicy et scénarios de chaos testing reproductibles.
       </div>
       <div class="card-tech">
@@ -629,14 +652,14 @@
   <!-- ── BDS : Bilan Carbone ── -->
   <div class="card" data-cat="bds">
     <div class="card-images one-image">
-      <div class="card-ribbon"><span class="rdot"></span>Bureau des Sports</div>
+      <div class="card-ribbon"><span class="rdot"></span><span data-i18n="ribbon_bds">Bureau des Sports</span></div>
       <div class="img-slot">
         <img src="assets/img/bilan-carbone.jpg" alt="Bilan Carbone Atlanticup" />
       </div>
     </div>
     <div class="card-body">
-      <div class="card-title">Bilan Carbone — Atlanticup</div>
-      <div class="card-desc">
+      <div class="card-title" data-i18n="bdc_title">Bilan Carbone — Atlanticup</div>
+      <div class="card-desc" data-i18n="bdc_desc">
         Mesure et analyse de l'empreinte carbone d'un événement sportif majeur réunissant plus de 800 participants, en partenariat avec Oresys. Résultats présentés devant 200 personnes avec des recommandations concrètes pour les futures éditions.
       </div>
       <div class="card-tech">
@@ -648,7 +671,7 @@
       <div class="card-links">
         <a class="card-link primary" href="assets/pdf/bilan-carbone-atlanticup.pdf" target="_blank">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Voir la présentation
+          <span data-i18n="bdc_link">Voir la présentation</span>
         </a>
       </div>
     </div>
@@ -657,23 +680,21 @@
   <!-- ── IA : Cobalt ── -->
   <div class="card" data-cat="ia">
     <div class="card-images two-images">
-      <div class="card-ribbon"><span class="rdot"></span>IA / ML</div>
+      <div class="card-ribbon"><span class="rdot"></span><span data-i18n="ribbon_ia">IA / ML</span></div>
       <div class="img-slot">
-        <!-- <img src="assets/img/cobalt-1.jpg" alt="Cobalt interface" /> -->
         <div class="img-placeholder">
 		<img src="assets/img/cellules.png" alt="Cobalt interface" />
         </div>
       </div>
       <div class="img-slot">
-        <!-- <img src="assets/img/cobalt-2.jpg" alt="Résultats Cobalt" /> -->
         <div class="img-placeholder">
 		<img src="assets/img/resultat-cobalt.png" alt="Cobalt interface" />
         </div>
       </div>
     </div>
     <div class="card-body">
-      <div class="card-title">Cobalt — Comptage Cellulaire par Deep Learning</div>
-      <div class="card-desc">
+      <div class="card-title" data-i18n="cobalt_title">Cobalt — Comptage Cellulaire par Deep Learning</div>
+      <div class="card-desc" data-i18n="cobalt_desc">
         Automatisation du comptage de cellules dans des échantillons biologiques à l'aide de techniques de deep learning, en collaboration avec l'entreprise Cobalt. Un vrai problème de vision par ordinateur appliqué au milieu scientifique.
       </div>
       <div class="card-tech">
@@ -693,23 +714,21 @@
   <!-- ── IA : LLM Cuisine ── -->
   <div class="card" data-cat="ia">
     <div class="card-images two-images">
-      <div class="card-ribbon"><span class="rdot"></span>IA / ML</div>
+      <div class="card-ribbon"><span class="rdot"></span><span data-i18n="ribbon_ia">IA / ML</span></div>
       <div class="img-slot">
-        <!-- <img src="assets/img/cuisine-1.jpg" alt="Assistant cuisine" /> -->
         <div class="img-placeholder">
 		<img src="assets/img/assistant-llm-cofid.jpg" alt="Assistant cuisine" />
         </div>
       </div>
       <div class="img-slot">
-        <!-- <img src="assets/img/cuisine-2.jpg" alt="Analyse nutritionnelle" /> -->
         <div class="img-placeholder">
 		<img src="assets/img/comparaison_image.png" alt="Analyse nutritionnelle" />
         </div>
       </div>
     </div>
     <div class="card-body">
-      <div class="card-title">Assistant Cuisine par LLM</div>
-      <div class="card-desc">
+      <div class="card-title" data-i18n="cuisine_title">Assistant Cuisine par LLM</div>
+      <div class="card-desc" data-i18n="cuisine_desc">
         Module de parsing de recettes, de correspondance d'ingrédients et d'analyse nutritionnelle. Exploite des technologies NLP pour enrichir des recettes à partir de texte libre et fournir un bilan nutritionnel complet.
       </div>
       <div class="card-tech">
@@ -730,15 +749,14 @@
   <!-- ── IA : BSS ── -->
   <div class="card" data-cat="ia">
     <div class="card-images one-image">
-      <div class="card-ribbon"><span class="rdot"></span>IA / ML</div>
+      <div class="card-ribbon"><span class="rdot"></span><span data-i18n="ribbon_ia">IA / ML</span></div>
       <div class="img-slot">
-        <!-- <img src="assets/img/bss-1.jpg" alt="Séparation de sources" /> -->
 		<img src="assets/img/spectre_separation.png" alt="Séparation de sources" />
       </div>
     </div>
     <div class="card-body">
-      <div class="card-title">Séparation Aveugle de Sources Sous-Déterminée</div>
-      <div class="card-desc">
+      <div class="card-title" data-i18n="bss_title">Séparation Aveugle de Sources Sous-Déterminée</div>
+      <div class="card-desc" data-i18n="bss_desc">
         Implémentation de deux méthodes de séparation de sources : Sparse Source Recovery par minimisation contrainte et CAGCMM. Extraction de signaux indépendants à partir de mélanges sans connaissance a priori.
       </div>
       <div class="card-tech">
@@ -759,15 +777,14 @@
   <!-- ── IA : Votes Sénat ── -->
   <div class="card" data-cat="ia">
     <div class="card-images one-image">
-      <div class="card-ribbon"><span class="rdot"></span>IA / ML</div>
+      <div class="card-ribbon"><span class="rdot"></span><span data-i18n="ribbon_ia">IA / ML</span></div>
       <div class="img-slot">
-        <!-- <img src="assets/img/senat-1.jpg" alt="Votes du Sénat" /> -->
 		<img src="assets/img/vote-senat.png" alt="Votes du Sénat" />
       </div>
     </div>
     <div class="card-body">
-      <div class="card-title">Votes du Sénat — Vulgarisation Politique</div>
-      <div class="card-desc">
+      <div class="card-title" data-i18n="senat_title">Votes du Sénat — Vulgarisation Politique</div>
+      <div class="card-desc" data-i18n="senat_desc">
         Compte Instagram de vulgarisation politique, neutre et indépendant. Traitement semi-automatisé des données de vote sénatorial pour les rendre accessibles au grand public. 169 abonnés, 8 publications.
       </div>
       <div class="card-tech">
@@ -785,7 +802,6 @@
     </div>
   </div>
 
-
 </div>
 
 <!-- ─── FOOTER ─── -->
@@ -793,12 +809,12 @@
   <div class="footer-inner">
     <div>
       <div class="footer-name">Corentin Boutault</div>
-      <div class="footer-note">Ingénieur IMT Atlantique · Cybersécurité & IA</div>
+      <div class="footer-note" data-i18n="footer_note">Ingénieur IMT Atlantique · Cybersécurité & IA</div>
     </div>
     <div class="footer-links">
       <a href="https://github.com/Cocobweb" target="_blank">GitHub</a>
       <a href="https://linkedin.com" target="_blank">LinkedIn</a>
-      <a href="mailto:corentin@example.com">Contact</a>
+      <a href="mailto:corentin.boutault@gmail.com">Contact</a>
     </div>
   </div>
 </footer>
@@ -834,6 +850,87 @@
   }, { threshold: 0.06 });
 
   cards.forEach(card => observer.observe(card));
+
+  // ── i18n ──
+  const translations = {
+    fr: {
+      nav_projects:        'Projets',
+      hero_eyebrow:        'Ingénieur diplômé IMT Atlantique',
+      hero_subtitle:       'Cyber & IA',
+      hero_desc:           "Passionné par la sécurité des systèmes et l'intelligence artificielle, j'aime construire des solutions qui ont un impact réel, que ce soit pour détecter des intrusions, automatiser des pipelines ou rendre l'information plus accessible.",
+      section_title:       'Mes projets',
+      filter_all:          'Tous les projets',
+      filter_bds:          'Bureau des Sports',
+      filter_ia:           'IA / Machine Learning',
+      filter_cyber:        'Cybersécurité',
+      ribbon_cyber:        'Cybersécurité',
+      ribbon_bds:          'Bureau des Sports',
+      ribbon_ia:           'IA / ML',
+      wazuh_desc:          "Simulation complète d'un environnement SOC sous Docker : déploiement d'un SIEM Wazuh, onboarding d'endpoints, simulation d'attaques réalistes, règles de détection custom et rapport d'incident professionnel.",
+      wazuh_incident_link: "Rapport d'incident",
+      devsecops_desc:      "Infrastructure AWS provisionnée avec Terraform, sécurisée dès la CI/CD via Checkov, tfsec et Trivy. Zéro exposition SSH, scan bloquant, déploiement automatisé et rapport de sécurité généré automatiquement.",
+      k8s_desc:            "Plateforme Kubernetes auto-hébergée sur cluster k3s single-node, provisionnée avec Ansible et pilotée par Flux CD en mode GitOps. Services production (Gitea, Vault, Prometheus/Grafana), isolation par namespace, NetworkPolicy et scénarios de chaos testing reproductibles.",
+      bdc_title:           'Bilan Carbone — Atlanticup',
+      bdc_desc:            "Mesure et analyse de l'empreinte carbone d'un événement sportif majeur réunissant plus de 800 participants, en partenariat avec Oresys. Résultats présentés devant 200 personnes avec des recommandations concrètes pour les futures éditions.",
+      bdc_link:            'Voir la présentation',
+      cobalt_title:        'Cobalt — Comptage Cellulaire par Deep Learning',
+      cobalt_desc:         "Automatisation du comptage de cellules dans des échantillons biologiques à l'aide de techniques de deep learning, en collaboration avec l'entreprise Cobalt. Un vrai problème de vision par ordinateur appliqué au milieu scientifique.",
+      cuisine_title:       'Assistant Cuisine par LLM',
+      cuisine_desc:        "Module de parsing de recettes, de correspondance d'ingrédients et d'analyse nutritionnelle. Exploite des technologies NLP pour enrichir des recettes à partir de texte libre et fournir un bilan nutritionnel complet.",
+      bss_title:           'Séparation Aveugle de Sources Sous-Déterminée',
+      bss_desc:            "Implémentation de deux méthodes de séparation de sources : Sparse Source Recovery par minimisation contrainte et CAGCMM. Extraction de signaux indépendants à partir de mélanges sans connaissance a priori.",
+      senat_title:         'Votes du Sénat — Vulgarisation Politique',
+      senat_desc:          "Compte Instagram de vulgarisation politique, neutre et indépendant. Traitement semi-automatisé des données de vote sénatorial pour les rendre accessibles au grand public. 169 abonnés, 8 publications.",
+      footer_note:         'Ingénieur IMT Atlantique · Cybersécurité & IA',
+    },
+    en: {
+      nav_projects:        'Projects',
+      hero_eyebrow:        'IMT Atlantique Engineering Graduate',
+      hero_subtitle:       'Cyber & AI',
+      hero_desc:           'Passionate about system security and artificial intelligence, I enjoy building solutions that have real impact — whether detecting intrusions, automating pipelines, or making information more accessible.',
+      section_title:       'My projects',
+      filter_all:          'All projects',
+      filter_bds:          'Sports Office',
+      filter_ia:           'AI / Machine Learning',
+      filter_cyber:        'Cybersecurity',
+      ribbon_cyber:        'Cybersecurity',
+      ribbon_bds:          'Sports Office',
+      ribbon_ia:           'AI / ML',
+      wazuh_desc:          'Full SOC environment simulation on Docker: Wazuh SIEM deployment, endpoint onboarding, realistic attack simulation, custom detection rules, and professional incident report.',
+      wazuh_incident_link: 'Incident Report',
+      devsecops_desc:      'AWS infrastructure provisioned with Terraform, secured from the CI/CD pipeline via Checkov, tfsec, and Trivy. Zero SSH exposure, blocking scans, automated deployment, and auto-generated security report.',
+      k8s_desc:            'Self-hosted Kubernetes platform on a single-node k3s cluster, provisioned with Ansible and managed via Flux CD in GitOps mode. Production services (Gitea, Vault, Prometheus/Grafana), namespace isolation, NetworkPolicy, and reproducible chaos testing scenarios.',
+      bdc_title:           'Carbon Footprint — Atlanticup',
+      bdc_desc:            'Measurement and analysis of the carbon footprint of a major sports event gathering over 800 participants, in partnership with Oresys. Results presented to an audience of 200 with concrete recommendations for future editions.',
+      bdc_link:            'View the presentation',
+      cobalt_title:        'Cobalt — Cell Counting via Deep Learning',
+      cobalt_desc:         'Automation of cell counting in biological samples using deep learning techniques, in collaboration with Cobalt. A real-world computer vision problem applied to a scientific context.',
+      cuisine_title:       'LLM Cooking Assistant',
+      cuisine_desc:        'Recipe parsing module, ingredient matching, and nutritional analysis. Leverages NLP technologies to enrich recipes from free text and provide a full nutritional breakdown.',
+      bss_title:           'Underdetermined Blind Source Separation',
+      bss_desc:            'Implementation of two source separation methods: Sparse Source Recovery via constrained minimization and CAGCMM. Extraction of independent signals from mixtures with no prior knowledge.',
+      senat_title:         'Senate Votes — Political Outreach',
+      senat_desc:          'Neutral and independent political outreach Instagram account. Semi-automated processing of senate vote data to make it accessible to the general public. 169 followers, 8 posts.',
+      footer_note:         'IMT Atlantique Engineer · Cybersecurity & AI',
+    }
+  };
+
+  let currentLang = 'fr';
+
+  function applyLang(lang) {
+    const t = translations[lang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (t[key] !== undefined) el.textContent = t[key];
+    });
+    document.documentElement.lang = lang;
+    document.getElementById('lang-btn').textContent = lang === 'fr' ? 'EN' : 'FR';
+  }
+
+  document.getElementById('lang-btn').addEventListener('click', () => {
+    currentLang = currentLang === 'fr' ? 'en' : 'fr';
+    applyLang(currentLang);
+  });
 </script>
 </body>
 </html>
