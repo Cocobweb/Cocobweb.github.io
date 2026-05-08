@@ -436,6 +436,44 @@
 
     .card-link.primary:hover { filter: brightness(1.15); }
 
+    /* ─── PROJECTS NOTE ─── */
+    .projects-note {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 48px 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .projects-note-inner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      border-left: 3px solid var(--ia);
+      border-radius: 10px;
+      padding: 12px 18px;
+    }
+
+    .projects-note-inner svg { color: var(--ia); flex-shrink: 0; }
+
+    .projects-note-text {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .projects-note-text a {
+      color: var(--ia);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .projects-note-text a:hover { color: var(--text); }
+
+    .note-sep { color: var(--subtle); margin: 0 6px; }
+
     /* ─── FOOTER ─── */
     footer {
       border-top: 1px solid var(--border);
@@ -532,6 +570,19 @@
 <div id="projets" style="max-width:1160px;margin:0 auto;padding:0 48px 12px;position:relative;z-index:1;">
   <h2 style="font-family:'Fraunces',serif;font-size:22px;font-weight:700;letter-spacing:-0.02em;color:var(--text);" data-i18n="section_title">Mes projets</h2>
 </div>
+<div class="projects-note">
+  <div class="projects-note-inner">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <p class="projects-note-text">
+      <span data-i18n="note_text">Ces projets mêlent réalisations personnelles et travaux académiques ou collaboratifs — retrouvez bien plus sur mon</span>
+      <a href="https://www.linkedin.com/in/corentin-boutault-461a01285/" target="_blank">LinkedIn</a>
+      <span class="note-sep">·</span>
+      <span data-i18n="note_and">et mon profil</span>
+      <a href="https://www.root-me.org/Cobweb-559491?lang=fr" target="_blank" id="rootme-link">Root-Me</a>.
+    </p>
+  </div>
+</div>
+
 <div class="filters-wrap">
   <button class="filter-btn active" data-cat="all" data-i18n="filter_all">Tous les projets</button>
   <button class="filter-btn" data-cat="bds" data-i18n="filter_bds">Bureau des Sports</button>
@@ -882,6 +933,8 @@
       senat_title:         'Votes du Sénat — Vulgarisation Politique',
       senat_desc:          "Compte Instagram de vulgarisation politique, neutre et indépendant. Traitement semi-automatisé des données de vote sénatorial pour les rendre accessibles au grand public. 169 abonnés, 8 publications.",
       footer_note:         'Ingénieur IMT Atlantique · Cybersécurité & IA',
+      note_text:           'Ces projets mêlent réalisations personnelles et travaux académiques ou collaboratifs — retrouvez bien plus sur mon',
+      note_and:            'et mon profil',
     },
     en: {
       nav_projects:        'Projects',
@@ -912,6 +965,8 @@
       senat_title:         'Senate Votes — Political Outreach',
       senat_desc:          'Neutral and independent political outreach Instagram account. Semi-automated processing of senate vote data to make it accessible to the general public. 169 followers, 8 posts.',
       footer_note:         'IMT Atlantique Engineer · Cybersecurity & AI',
+      note_text:           'These projects include personal, academic and collaborative work — find much more on my',
+      note_and:            'and my profile',
     }
   };
 
@@ -925,6 +980,10 @@
     });
     document.documentElement.lang = lang;
     document.getElementById('lang-btn').textContent = lang === 'fr' ? 'EN' : 'FR';
+    const rootmeLink = document.getElementById('rootme-link');
+    if (rootmeLink) rootmeLink.href = lang === 'fr'
+      ? 'https://www.root-me.org/Cobweb-559491?lang=fr'
+      : 'https://www.root-me.org/Cobweb-559491?lang=en';
   }
 
   document.getElementById('lang-btn').addEventListener('click', () => {
