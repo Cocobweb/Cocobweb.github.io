@@ -265,9 +265,9 @@
       box-shadow: var(--shadow-lg);
     }
 
-    .card[data-cat="bds"]:hover   { border-color: var(--bds-mid); }
-    .card[data-cat="ia"]:hover    { border-color: var(--ia-mid); }
-    .card[data-cat="cyber"]:hover { border-color: var(--cyber-mid); }
+    .card[data-cat*="bds"]:hover   { border-color: var(--bds-mid); }
+    .card[data-cat*="ia"]:hover    { border-color: var(--ia-mid); }
+    .card[data-cat*="cyber"]:hover { border-color: var(--cyber-mid); }
 
     /* Card images area */
     .card-images {
@@ -327,9 +327,9 @@
 
     .img-placeholder svg { opacity: 0.35; }
 
-    .card[data-cat="bds"]   .card-images { background: rgba(45,212,170,0.05); }
-    .card[data-cat="ia"]    .card-images { background: rgba(123,140,255,0.05); }
-    .card[data-cat="cyber"] .card-images { background: rgba(255,122,80,0.05); }
+    .card[data-cat*="bds"]   .card-images { background: rgba(45,212,170,0.05); }
+    .card[data-cat*="ia"]    .card-images { background: rgba(123,140,255,0.05); }
+    .card[data-cat*="cyber"] .card-images { background: rgba(255,122,80,0.05); }
 
     /* Category ribbon */
     .card-ribbon {
@@ -353,13 +353,13 @@
       border-radius: 50%;
     }
 
-    .card[data-cat="bds"]   .card-ribbon { background: rgba(28,30,34,0.75); color: var(--bds);  border: 1px solid var(--bds-mid); }
-    .card[data-cat="ia"]    .card-ribbon { background: rgba(28,30,34,0.75); color: var(--ia);   border: 1px solid var(--ia-mid);  }
-    .card[data-cat="cyber"] .card-ribbon { background: rgba(28,30,34,0.75); color: var(--cyber);border: 1px solid var(--cyber-mid);}
+    .card[data-cat*="bds"]   .card-ribbon { background: rgba(28,30,34,0.75); color: var(--bds);  border: 1px solid var(--bds-mid); }
+    .card[data-cat*="ia"]    .card-ribbon { background: rgba(28,30,34,0.75); color: var(--ia);   border: 1px solid var(--ia-mid);  }
+    .card[data-cat*="cyber"] .card-ribbon { background: rgba(28,30,34,0.75); color: var(--cyber);border: 1px solid var(--cyber-mid);}
 
-    .card[data-cat="bds"]   .card-ribbon .rdot { background: var(--bds); }
-    .card[data-cat="ia"]    .card-ribbon .rdot  { background: var(--ia); }
-    .card[data-cat="cyber"] .card-ribbon .rdot  { background: var(--cyber); }
+    .card[data-cat*="bds"]   .card-ribbon .rdot { background: var(--bds); }
+    .card[data-cat*="ia"]    .card-ribbon .rdot  { background: var(--ia); }
+    .card[data-cat*="cyber"] .card-ribbon .rdot  { background: var(--cyber); }
 
     /* Card body */
     .card-body {
@@ -430,11 +430,18 @@
 
     .card-link:hover { color: var(--text); border-color: rgba(255,255,255,0.18); }
 
-    .card[data-cat="bds"]   .card-link.primary { color: var(--bds);  border-color: var(--bds-mid);   background: var(--bds-light);   }
-    .card[data-cat="ia"]    .card-link.primary { color: var(--ia);   border-color: var(--ia-mid);    background: var(--ia-light);    }
-    .card[data-cat="cyber"] .card-link.primary { color: var(--cyber);border-color: var(--cyber-mid); background: var(--cyber-light); }
+    .card[data-cat*="bds"]   .card-link.primary { color: var(--bds);  border-color: var(--bds-mid);   background: var(--bds-light);   }
+    .card[data-cat*="ia"]    .card-link.primary { color: var(--ia);   border-color: var(--ia-mid);    background: var(--ia-light);    }
+    .card[data-cat*="cyber"] .card-link.primary { color: var(--cyber);border-color: var(--cyber-mid); background: var(--cyber-light); }
 
     .card-link.primary:hover { filter: brightness(1.15); }
+
+    /* dual-category card (ia + cyber) — ia color takes precedence */
+    .card[data-cat="ia cyber"]:hover        { border-color: var(--ia-mid); }
+    .card[data-cat="ia cyber"] .card-images { background: rgba(123,140,255,0.05); }
+    .card[data-cat="ia cyber"] .card-ribbon { background: rgba(28,30,34,0.75); color: var(--ia); border: 1px solid var(--ia-mid); }
+    .card[data-cat="ia cyber"] .card-link.primary { color: var(--ia); border-color: var(--ia-mid); background: var(--ia-light); }
+    .card[data-cat="ia cyber"] .card-ribbon .rdot  { background: var(--ia); }
 
     /* ─── PROJECTS NOTE ─── */
     .projects-note {
@@ -699,6 +706,39 @@
     </div>
   </div>
 
+  <!-- ── IA + Cyber : LLM Resilience ── -->
+  <div class="card" data-cat="ia cyber">
+    <div class="card-images one-image">
+      <div class="card-ribbon">
+        <span class="rdot"></span>
+        <span data-i18n="ribbon_ia_cyber">IA · Cybersécurité</span>
+        <span class="rdot" style="background:var(--cyber)"></span>
+      </div>
+      <div class="img-slot">
+        <img src="assets/img/resilience-llm.png" alt="LLM Resilience Analysis" />
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-title" data-i18n="llm_resilience_title">Analyse de Résilience LLM</div>
+      <div class="card-desc" data-i18n="llm_resilience_desc">
+        Évaluation empirique de 7 LLMs open-weight face aux 6 catégories de pièges pour agents IA (Franklin et al., Google DeepMind). 49 scénarios adversariaux, 5 runs, statistiques bootstrap et tests de Mann-Whitney. Résultat clé : le social engineering (T6) contourne 100% des modèles testés.
+      </div>
+      <div class="card-tech">
+        <span class="tech-pill">Python</span>
+        <span class="tech-pill">Ollama</span>
+        <span class="tech-pill">LLM</span>
+        <span class="tech-pill" data-i18n="pill_adversarial">IA Adversariale</span>
+        <span class="tech-pill">Statistics</span>
+      </div>
+      <div class="card-links">
+        <a class="card-link primary" href="https://github.com/Cocobweb/analysis-resilience-llm" target="_blank">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!-- ── BDS : Bilan Carbone ── -->
   <div class="card" data-cat="bds">
     <div class="card-images one-image">
@@ -909,7 +949,7 @@
       btn.classList.add('active');
       const cat = btn.dataset.cat;
       cards.forEach(card => {
-        if (cat === 'all' || card.dataset.cat === cat) {
+        if (cat === 'all' || card.dataset.cat.split(' ').includes(cat)) {
           card.classList.remove('hidden');
         } else {
           card.classList.add('hidden');
@@ -972,6 +1012,10 @@
       pill_gestion_projet: 'Gestion de projet',
       pill_evenementiel:   'Événementiel',
       treso_title:         'Trésorier : Bureau des Sports IMT Atlantique',
+      ribbon_ia_cyber:         'IA · Cybersécurité',
+      llm_resilience_title:    'Analyse de Résilience LLM',
+      llm_resilience_desc:     "Évaluation empirique de 7 LLMs open-weight face aux 6 catégories de pièges pour agents IA (Franklin et al., Google DeepMind). 49 scénarios adversariaux, 5 runs, statistiques bootstrap et tests de Mann-Whitney. Résultat clé : le social engineering (T6) contourne 100% des modèles testés.",
+      pill_adversarial:        'IA Adversariale',
       treso_desc:          "Gestion de la trésorerie générale du BDS sur l'année 2023-2024 : budget prévisionnel, suivi des dépenses, coordination des inscriptions pour plus de 100 participants aux compétitions majeures (TOSS, CCL, Atlanticup), pilotage du budget Atlanticup (~20 000€), organisation d'événements sportifs locaux et rédaction du dossier de passation. Environ 8h par semaine.",
     },
     en: {
@@ -1013,6 +1057,10 @@
       pill_tresorerie:     'Treasury',
       pill_gestion_projet: 'Project Management',
       pill_evenementiel:   'Event Management',
+      ribbon_ia_cyber:         'AI · Cybersecurity',
+      llm_resilience_title:    'LLM Resilience Analysis',
+      llm_resilience_desc:     'Empirical evaluation of 7 open-weight LLMs against the 6 AI Agent Trap categories (Franklin et al., Google DeepMind). 49 adversarial scenarios, 5 runs each, with bootstrap-validated statistics and Mann-Whitney U tests. Key finding: social engineering (T6) bypasses 100% of tested models.',
+      pill_adversarial:        'Adversarial AI',
       treso_title:         'Treasurer : IMT Atlantique Sports Office',
       treso_desc:          'Managed the general treasury of the Sports Office for the 2023-2024 year: drafted budgets, tracked expenses, coordinated registrations for over 100 participants in major competitions (TOSS, CCL, Atlanticup), oversaw the Atlanticup budget (~€20,000), organised local sports events, and wrote the handover report. Around 8 hours per week.',
     }
